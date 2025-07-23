@@ -11,8 +11,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Sequence {
+
+
     @Id
     private int id;
     private int sequence;
 
+    public int getSequence() {
+        return sequence;
+    }
+
+    public int getId() {
+        return id;
+    }
 }
