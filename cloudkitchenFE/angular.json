@@ -3,9 +3,19 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cloudkitchen": {
+    "cloudkitchenFE": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "standalone": false
+        },
+        "@schematics/angular:directive": {
+          "standalone": false
+        },
+        "@schematics/angular:pipe": {
+          "standalone": false
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -56,10 +66,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "cloudkitchen:build:production"
+              "buildTarget": "cloudkitchenFE:build:production"
             },
             "development": {
-              "buildTarget": "cloudkitchen:build:development"
+              "buildTarget": "cloudkitchenFE:build:development"
             }
           },
           "defaultConfiguration": "development"
