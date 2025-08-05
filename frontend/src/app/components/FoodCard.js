@@ -6,6 +6,15 @@ function FoodCard({name,address,city,description,rating,link}) {
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-md bg-white">
+         {/* Image */}
+        <Image
+        unoptimized
+        src={""+link}
+        alt='image'
+        width={400}
+        height={400}
+        />
+       
       
 
       {/* Content */}
@@ -20,6 +29,7 @@ function FoodCard({name,address,city,description,rating,link}) {
         <p className="text-sm text-gray-600">
           {description}
         </p>
+        
 
         {/* Order Button */}
         <Link href={link}>

@@ -29,7 +29,7 @@ export default function Home() {
         <div className="grid grid-cols-4 gap-4 px-10 py-10">
           {Restaurants.map((restaurant) => (
             <FoodCard
-              key={restaurant.id }
+              key={restaurant.id ?? restaurant.name}
               name={restaurant.name || ""}
               description={restaurant.description || ""}
               address={restaurant.address || ""}
