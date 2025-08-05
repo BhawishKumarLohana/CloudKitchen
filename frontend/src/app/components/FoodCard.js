@@ -9,7 +9,7 @@ function FoodCard({name,address,city,description,rating,link}) {
          {/* Image */}
         <Image
         unoptimized
-        src={""+link}
+        src={link}
         alt='image'
         width={400}
         height={400}
