@@ -26,7 +26,8 @@ public class RestaurantService {
                         restaurant.getAddress(),
                         restaurant.getCity(),
                         restaurant.getDescription(),
-                        restaurant.getRating()
+                        restaurant.getRating(),
+                        restaurant.getImageUrl()
                 ))
                 .collect(Collectors.toList());
     }
@@ -37,7 +38,8 @@ public class RestaurantService {
                         restaurant.getAddress(),
                         restaurant.getCity(),
                         restaurant.getDescription(),
-                        restaurant.getRating()
+                        restaurant.getRating(),
+                        restaurant.getImageUrl()
                 ));
     }
     public RestaurantDto createRestaurant(RestaurantDto request){
@@ -47,6 +49,7 @@ public class RestaurantService {
         restaurant.setAddress(request.getAddress());
         restaurant.setCity(request.getCity());
         restaurant.setRating(request.getRating());
+        restaurant.setImageUrl(request.getImageUrl());
 
         Restaurant saved = restaurantRepository.save(restaurant);
 
@@ -55,7 +58,8 @@ public class RestaurantService {
                 saved.getAddress(),
                 saved.getCity(),
                 saved.getDescription(),
-                saved.getRating()
+                saved.getRating(),
+                saved.getImageUrl()
         );
 
 

@@ -7,6 +7,7 @@ public class RestaurantDto {
     private String city;
     private String description;
     private double rating;
+    private String imageUrl;
 
     public String getName() {
         return name;
@@ -20,8 +21,16 @@ public class RestaurantDto {
         return address;
     }
 
+    public String getImageUrl(){
+        return imageUrl;
+    }
+
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setImageUrl(String url){
+        this.imageUrl = url;
     }
 
     public String getCity() {
@@ -51,12 +60,13 @@ public class RestaurantDto {
 
 
     // Manually written constructor
-    public RestaurantDto(String name, String address, String city, String description, double rating) {
+    public RestaurantDto(String name, String address, String city, String description, double rating,String url) {
         this.name = name;
         this.address = address;
         this.city = city;
         this.description = description;
         this.rating = rating;
+        this.imageUrl = url;
     }
 
     // No-arg constructor (needed for Jackson or serialization)

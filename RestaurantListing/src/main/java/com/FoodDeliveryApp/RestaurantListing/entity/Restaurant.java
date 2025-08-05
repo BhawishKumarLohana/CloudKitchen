@@ -23,6 +23,7 @@ public class Restaurant {
     private String city;
     private String description;
     private double  rating;
+    private String imageUrl;
 
 
     public String getCity() {
@@ -49,6 +50,8 @@ public class Restaurant {
         return rating;
     }
 
+    public String getImageUrl(){return imageUrl; }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -68,4 +71,6 @@ public class Restaurant {
     public void setRating(double rating) {
         this.rating = rating;
     }
+
+    public void setImageUrl(String url){ this.imageUrl = url;}
 }
