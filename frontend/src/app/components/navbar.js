@@ -19,6 +19,12 @@ export default function Navbar() {
           <Link href="/" className="text-sm text-gray-700 hover:text-gray-900">
             Home
           </Link>
+          <Link href="/signup" className="text-sm text-gray-700 hover:text-gray-900">
+            Signup
+          </Link>
+           <Link href="/login" className="text-sm text-gray-700 hover:text-gray-900">
+            Login
+          </Link>
         </nav>
       </div>
     </header>
