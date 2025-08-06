@@ -9,6 +9,7 @@ export default function Home() {
 
   const [Restaurants,setRestaurants] = useState([]);
   const [createRestModal,setcreateRestModal] = useState(false);
+  const [imageUpload,setImageUploaded] = useState(false);
   const [formData, setFormData] = useState({
   name: "",
   address: "",
@@ -24,10 +25,23 @@ async function uploadFile(file) {
   try {
     const result = await uploadImage(file);
     console.log("Upload successful:", result);
+    return result.secure_url;
     // Optional: update state with result.url if your API returns the image URL
   } catch (err) {
     console.error("Upload failed:", err);
   }
+}
+
+async function sendCreateRestaurant(formData){
+  if(imageUpload){
+  await createRestaurant(formData);
+  setFormData({ name: "",description: "",address: "",city: ""});
+  alert("Successful Add");
+  setcreateRestModal(false);
+  }else{
+    console.log("sorry image is not uploaded, try again");
+  }
+
 }
 
 
@@ -64,10 +78,12 @@ async function uploadFile(file) {
               type="file"
               accept="image/*"
               className="mt-2"
-              onChange={(e) => {
+              onChange={async (e) => {
                 const file = e.target.files[0];
                 console.log("Storing "+file);
-                uploadFile(file);
+                const url = await uploadFile(file);
+                setFormData({...formData,imageUrl:url})
+                setImageUploaded(true);
 
 
               }}
@@ -84,7 +100,7 @@ async function uploadFile(file) {
           
         </form>
         <div className="flex w-full px-5 py-5 justify-end-safe">
-          <button className="border-2 border-black rounded-2xl text-sm py-2 px-5 w-1/4 " onClick={async ()=>{await createRestaurant(formData)}}>Create</button>
+          <button className="border-2 border-black rounded-2xl text-sm py-2 px-5 w-1/4 " onClick={()=>{sendCreateRestaurant(formData);}}>Create</button>
           <button className="border-2 border-black rounded-2xl text-sm py-2 px-5 w-1/4 " onClick={()=>{setcreateRestModal(false);setFormData({ name: "",description: "",address: "",city: ""})}}>Close</button>
           </div>
       </div>
