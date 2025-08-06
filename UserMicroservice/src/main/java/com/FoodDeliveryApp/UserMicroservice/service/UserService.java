@@ -1,5 +1,6 @@
 package com.FoodDeliveryApp.UserMicroservice.service;
 
+import com.FoodDeliveryApp.UserMicroservice.dto.LoginDto;
 import com.FoodDeliveryApp.UserMicroservice.dto.UserDto;
 import com.FoodDeliveryApp.UserMicroservice.entity.User;
 import com.FoodDeliveryApp.UserMicroservice.repository.UserRespository;
@@ -44,4 +45,22 @@ public class UserService {
 
     }
 
+    public boolean login(LoginDto req) {
+        String reqName = req.getUsername();
+        String reqPass = req.getPassword();
+
+        Optional<User> u = userRespository.findByUsername(reqName);
+
+        if(u.isEmpty()){return false;}
+
+        User user = u.get();
+
+        if(user.getPassword().equals(reqPass)){
+            return true;
+        }else{
+            return  false;
+        }
+
+
+    }
 }

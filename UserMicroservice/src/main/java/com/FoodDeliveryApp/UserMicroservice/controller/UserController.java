@@ -1,5 +1,6 @@
 package com.FoodDeliveryApp.UserMicroservice.controller;
 
+import com.FoodDeliveryApp.UserMicroservice.dto.LoginDto;
 import com.FoodDeliveryApp.UserMicroservice.dto.UserDto;
 import com.FoodDeliveryApp.UserMicroservice.repository.UserRespository;
 import com.FoodDeliveryApp.UserMicroservice.service.UserService;
@@ -24,9 +25,20 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    // Create User
     @PostMapping("/create")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto req){
         return ResponseEntity.ok(userService.createUser(req));
+    }
+
+    // LoginAuthorization
+    @PostMapping("/login")
+    public ResponseEntity<String> login (@RequestBody LoginDto req){
+        if(userService.login(req)){
+            return ResponseEntity.ok("SUCCESS");
+        }else{
+            return ResponseEntity.ok("FAIL");
+        }
     }
 
 }

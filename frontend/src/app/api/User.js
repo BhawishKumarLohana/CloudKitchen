@@ -12,7 +12,12 @@ export async function createUser(formData){
     console.log(res);
 }
 
-export async function AuthLogin(formData){
-    const res  = api.post('/user/login',formData);
-    console.log(res);
+export async function AuthLogin(payload) {
+  try {
+    const { data } = await api.post('/user/login', payload);
+    return data;                // <- this is what you want ("SUCCESS", true, etc.)
+  } catch (err) {
+    console.error('AuthLogin error:', err.response?.data || err.message);
+    throw err;
+  }
 }
