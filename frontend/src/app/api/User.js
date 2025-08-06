@@ -12,4 +12,7 @@ export async function createUser(formData){
     console.log(res);
 }
 
-
+export async function AuthLogin(formData){
+    const res  = api.post('/user/login',formData);
+    console.log(res);
+}
