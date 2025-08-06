@@ -2,12 +2,35 @@
 import Image from "next/image";
 import navbar from "./components/navbar";
 import FoodCard from "./components/FoodCard";
-import { getAllRestaurants } from "./api/Restaurant";
+import { getAllRestaurants,createRestaurant, uploadImage } from "./api/Restaurant";
 import { useState,useEffect } from "react";
+
 export default function Home() {
 
   const [Restaurants,setRestaurants] = useState([]);
   const [createRestModal,setcreateRestModal] = useState(false);
+  const [formData, setFormData] = useState({
+  name: "",
+  address: "",
+  city: "",
+  description: "",
+  rating: "4",
+  imageUrl:""
+  
+  
+});
+
+async function uploadFile(file) {
+  try {
+    const result = await uploadImage(file);
+    console.log("Upload successful:", result);
+    // Optional: update state with result.url if your API returns the image URL
+  } catch (err) {
+    console.error("Upload failed:", err);
+  }
+}
+
+
   let modalContent = null;
   useEffect(()=>{
     async function fetchRestarants (){
@@ -24,12 +47,13 @@ export default function Home() {
     modalContent = (
       <div className=" items-center justify-center max-w-3xl max-h-1/2 border-dashed border-black bg-white">
         <h2 className="text-back text-2xl">Create Restaurant</h2>
-        <form className="grid grid-cols-1 px-10 py-10 gap-2" onSubmit={() => setcreateRestModal(false)}>
+        <form className="grid grid-cols-1 px-10 py-10 gap-2" onSubmit={() => {setcreateRestModal(false);console.log(formData)} }>
           <div
             onDrop={(e) => {
               e.preventDefault();
               const file = e.dataTransfer.files[0];
-              console.log(file); // send or preview
+              console.log(file);
+              
             }}
             onDragOver={(e) => e.preventDefault()}
             className="border-2 border-dashed border-gray-400 rounded-lg p-6 text-center cursor-pointer"
@@ -42,23 +66,26 @@ export default function Home() {
               className="mt-2"
               onChange={(e) => {
                 const file = e.target.files[0];
-                console.log(file);
+                console.log("Storing "+file);
+                uploadFile(file);
+
+
               }}
             />
           </div>
           <label className="">Name</label>
-          <input placeholder="Name"></input>
+          <input placeholder="Name" value={formData.name} onChange={(e)=>setFormData({...formData,name:e.target.value})}></input>
           <label className="">Description</label>
-          <input placeholder="Description"></input>
+          <input placeholder="Description" value={formData.description} onChange={(e)=>setFormData({...formData,description:e.target.value})}></input>
           <label className="">Address</label>
-          <input placeholder="Address"></input>
+          <input placeholder="Address" value={formData.address} onChange={(e)=>setFormData({...formData,address:e.target.value})}></input>
           <label className="">City</label>
-          <input placeholder="City"></input>
+          <input placeholder="City" value={formData.city} onChange={(e)=>setFormData({...formData,city:e.target.value})}></input>
           
         </form>
         <div className="flex w-full px-5 py-5 justify-end-safe">
-          <button className="border-2 border-black rounded-2xl text-sm py-2 px-5 w-1/4 " onClick={()=>{console.log("Submit Data");}}>Create</button>
-          <button className="border-2 border-black rounded-2xl text-sm py-2 px-5 w-1/4 " onClick={()=>{setcreateRestModal(false)}}>Close</button>
+          <button className="border-2 border-black rounded-2xl text-sm py-2 px-5 w-1/4 " onClick={async ()=>{await createRestaurant(formData)}}>Create</button>
+          <button className="border-2 border-black rounded-2xl text-sm py-2 px-5 w-1/4 " onClick={()=>{setcreateRestModal(false);setFormData({ name: "",description: "",address: "",city: ""})}}>Close</button>
           </div>
       </div>
     );

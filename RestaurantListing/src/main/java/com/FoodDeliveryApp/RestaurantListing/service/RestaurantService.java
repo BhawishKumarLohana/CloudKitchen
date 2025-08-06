@@ -49,6 +49,7 @@ public class RestaurantService {
         restaurant.setAddress(request.getAddress());
         restaurant.setCity(request.getCity());
         restaurant.setRating(request.getRating());
+        restaurant.setDescription(request.getDescription());
         restaurant.setImageUrl(request.getImageUrl());
 
         Restaurant saved = restaurantRepository.save(restaurant);
