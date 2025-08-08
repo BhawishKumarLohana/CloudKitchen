@@ -8,6 +8,8 @@ function RestaurantById({params}) {
   const {id} =use(params);
     //console.log("id"+id);
     const [Food,setFoodList] = useState([]);
+    const [thisItem,setThisItem] = useState(0); //  by id
+
 
   const getRestaurantById = async (id) => {
     try {
@@ -18,12 +20,24 @@ function RestaurantById({params}) {
       console.error("Failed to fetch food list", error);
     }
 };
+  const addItem = (item) =>{
+    if(item.quantity>0){
+      item.quantity = item.quantity -1;
+      console.log("Item is added!");
+    }else{
+      alert("No more available!");
+    }
+    
+    
 
-useEffect(() => {
-  if (id) {
-    getRestaurantById(id);
+
   }
-}, [id]);
+
+  useEffect(() => {
+    if (id) {
+      getRestaurantById(id);
+    }
+  }, [id]);
 
 
    return (
@@ -43,7 +57,7 @@ useEffect(() => {
                 ))}
               </ul>
             )}
-            <button className='bg-white text-2xl rounded-2xl border-black border-2 hover:bg-emerald-50'>Add +</button>
+            <button  onClick={()=>addItem(item)} className='bg-white text-2xl rounded-2xl border-black border-2 hover:bg-emerald-50'>Add</button>
           </div>
           
         ))}
