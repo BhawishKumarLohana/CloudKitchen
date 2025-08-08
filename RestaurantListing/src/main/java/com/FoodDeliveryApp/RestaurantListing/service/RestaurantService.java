@@ -22,6 +22,7 @@ public class RestaurantService {
 
         return restaurants.stream()
                 .map(restaurant -> new RestaurantDto(
+                        restaurant.getId(),
                         restaurant.getName(),
                         restaurant.getAddress(),
                         restaurant.getCity(),
@@ -34,6 +35,7 @@ public class RestaurantService {
     public Optional<RestaurantDto> getRestaurantById(String id) {
         return restaurantRepository.findById(Integer.parseInt(id))
                 .map(restaurant -> new RestaurantDto(
+                        restaurant.getId(),
                         restaurant.getName(),
                         restaurant.getAddress(),
                         restaurant.getCity(),
@@ -55,6 +57,7 @@ public class RestaurantService {
         Restaurant saved = restaurantRepository.save(restaurant);
 
         return new RestaurantDto(
+                saved.getId(),
                 saved.getName(),
                 saved.getAddress(),
                 saved.getCity(),

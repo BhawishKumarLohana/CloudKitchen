@@ -2,12 +2,15 @@ package com.FoodDeliveryApp.RestaurantListing.dto;
 
 
 public class RestaurantDto {
+    private int id;
     private String name;
     private String address;
     private String city;
     private String description;
     private double rating;
     private String imageUrl;
+
+    public int getId(){return id;}
 
     public String getName() {
         return name;
@@ -53,6 +56,8 @@ public class RestaurantDto {
         return rating;
     }
 
+    public void setId(int id){this.id =id ;}
+
     public void setRating(double rating) {
         this.rating = rating;
     }
@@ -60,13 +65,14 @@ public class RestaurantDto {
 
 
     // Manually written constructor
-    public RestaurantDto(String name, String address, String city, String description, double rating,String url) {
+    public RestaurantDto(int id,String name, String address, String city, String description, double rating,String url) {
         this.name = name;
         this.address = address;
         this.city = city;
         this.description = description;
         this.rating = rating;
         this.imageUrl = url;
+        this.id = id;
     }
 
     // No-arg constructor (needed for Jackson or serialization)

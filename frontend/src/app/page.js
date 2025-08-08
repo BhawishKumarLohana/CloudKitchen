@@ -128,6 +128,7 @@ async function sendCreateRestaurant(formData){
           {Restaurants.map((restaurant) => (
             <FoodCard
               key={restaurant.id ?? restaurant.name}
+              id={restaurant.id}
               name={restaurant.name || ""}
               description={restaurant.description || ""}
               address={restaurant.address || ""}

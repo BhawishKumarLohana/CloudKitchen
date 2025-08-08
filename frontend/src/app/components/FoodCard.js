@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-function FoodCard({name,address,city,description,rating,link}) {
+function FoodCard({id,name,address,city,description,rating,link}) {
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-md bg-white">
@@ -32,7 +32,7 @@ function FoodCard({name,address,city,description,rating,link}) {
         
 
         {/* Order Button */}
-        <Link href={link}>
+        <Link href={"/restaurant/"+id}>
         <button className="mt-2 rounded bg-gray-600 px-4 py-2 text-white" >
             
           Order
