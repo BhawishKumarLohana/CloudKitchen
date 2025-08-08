@@ -1,6 +1,5 @@
 "use client"
 import { getFoodList } from '@/app/api/Food';
-import {  useRouter } from 'next/router';
 import { useState } from 'react';
 import React, { useEffect } from 'react'
 import { use } from 'react';
