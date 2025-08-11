@@ -1,13 +1,13 @@
-package com.FoodDelivery.OrderMicroservice;
+package com.FoodDeliveryApplication.OrderMS;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OrderMicroserviceApplication {
+public class OrderMsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OrderMicroserviceApplication.class, args);
+		SpringApplication.run(OrderMsApplication.class, args);
 	}
 
 }

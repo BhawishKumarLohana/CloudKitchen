@@ -1,10 +1,10 @@
-package com.FoodDelivery.OrderMicroservice;
+package com.FoodDeliveryApplication.OrderMS;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OrderMicroserviceApplicationTests {
+class OrderMsApplicationTests {
 
 	@Test
 	void contextLoads() {
