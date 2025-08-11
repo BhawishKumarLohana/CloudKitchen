@@ -1,11 +1,12 @@
 "use client"
 import { getFoodList } from '@/app/api/Food';
+import { isAppPageRouteDefinition } from 'next/dist/server/route-definitions/app-page-route-definition';
 import { useState } from 'react';
 import React, { useEffect } from 'react'
 import { use } from 'react';
 
 function RestaurantById({params}) {
-  const {id} =use(params);
+    const {id} =use(params);
     //console.log("id"+id);
     const [Food,setFoodList] = useState([]);
     const [thisItem,setThisItem] = useState(0); //  by id
@@ -20,22 +21,39 @@ function RestaurantById({params}) {
       console.error("Failed to fetch food list", error);
     }
 };
-  const addItem = (item) =>{
-    if(item.quantity>0){
-      item.quantity = item.quantity -1;
-      console.log("Item is added!");
-    }else{
-      alert("No more available!");
+
+// The logic 
+// When an item is Added
+// User must be logged in 
+// Item is from a Restuarant 
+// so each orderId is made up out of userId and Items 
+// items added must belong to one restaurant 
+// don't allow multiple items bought from multiple restaurants
+// OrderTable : {orderId,userId,RestaurantID,itemId}
+// save an Order we pass in userId,RestaurantID,ItemId --> orderId generated. All Checks on the frontend for my ease.
+
+
+ const addItem = (clickedItem) => {
+  const updatedList = Food.map((eachItem) => {
+    if (eachItem.id === clickedItem.id && eachItem.quantity>0) {
+      return {
+        ...eachItem,
+        quantity: eachItem.quantity - 1
+      };
+    } else {
+      return eachItem;
     }
-    
-    
+  });
+
+  setFoodList(updatedList); // Update the state so UI re-renders
+};
 
 
-  }
 
   useEffect(() => {
     if (id) {
       getRestaurantById(id);
+      
     }
   }, [id]);
 
@@ -44,8 +62,8 @@ function RestaurantById({params}) {
     <div>
     <div>RestaurantById</div>
     <div className="grid gap-4">
-        {Food.map((item, index) => (
-          <div key={index} className="border p-4 rounded shadow">
+        {Food.map((item) => (
+          <div key={item.id} className="border p-4 rounded shadow">
             <h2 className="text-lg font-semibold">{item.itemName}</h2>
             <p className="text-sm text-gray-700">{item.itemDescription}</p>
             <p className="text-green-600 font-bold">Price: ${item.price}</p>

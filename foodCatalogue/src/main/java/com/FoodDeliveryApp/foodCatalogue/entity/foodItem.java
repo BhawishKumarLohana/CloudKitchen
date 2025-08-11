@@ -12,7 +12,6 @@ public class foodItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
     private String itemName;
     private String itemDescription;
     private List<String> Ingedrients;
@@ -29,6 +28,12 @@ public class foodItem {
         this.quantity = quantity;
     }
     public foodItem(){}
+
+    public int getId(){return this.id;}
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getItemName() {
         return itemName;
@@ -77,6 +82,8 @@ public class foodItem {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
+
 
 
 

@@ -13,7 +13,7 @@ public class FoodItemDto {
     private Integer quantity;
     private int id;
 
-    public FoodItemDto(String itemName,Integer quantity, Integer restaurantId, Number price, List<String> ingedrients, String itemDescription) {
+    public FoodItemDto(int id, String itemName,Integer quantity, Integer restaurantId, Number price, List<String> ingedrients, String itemDescription) {
         this.itemName = itemName;
         this.quantity = quantity;
         this.restaurantId = restaurantId;

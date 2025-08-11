@@ -29,6 +29,7 @@ public class FoodCatalogueService {
 
         foodItem saved = foodCatalogueRepo.save(newItem);
         return new FoodItemDto(
+                saved.getId(),
                 saved.getItemName(),
                 saved.getQuantity(),
                 saved.getRestaurantId(),
