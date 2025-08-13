@@ -11,6 +11,13 @@ export async function getFoodList(id) {
   //console.log(res.data);
   return res.data;
 }
+export async function addFoodItem(formData) {
+  const res = await api.post('/addFoodItem',formData,{
+     headers: { "Content-Type": "application/json" },
+
+  });
+  console.log(res);
+}
 
 
 

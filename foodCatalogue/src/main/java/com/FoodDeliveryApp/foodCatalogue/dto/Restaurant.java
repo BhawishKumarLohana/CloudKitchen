@@ -1,6 +1,7 @@
 package com.FoodDeliveryApp.foodCatalogue.dto;
 
 public class Restaurant {
+    private int id;
     private String name;
     private String address;
     private String city;
@@ -8,7 +9,8 @@ public class Restaurant {
     private double rating;
 
     // Manually written constructor
-    public Restaurant(String name, String address, String city, String description, double rating) {
+    public Restaurant(int id, String name, String address, String city, String description, double rating) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.city = city;
@@ -19,6 +21,10 @@ public class Restaurant {
     // No-arg constructor (needed for Jackson or serialization)
     public Restaurant() {
     }
+
+    public int getId(){return this.id;}
+
+    public void setId(int id){this.id = id;}
 
 
     public String getName() {
