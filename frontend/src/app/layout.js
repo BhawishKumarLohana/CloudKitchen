@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "./providers/Auth";
 import Navbar from "./components/navbar";
 export const metadata = {
   title: "Food Delivery Application",
@@ -11,8 +12,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       
       <body>
-        <Navbar/>
-        {children}
+         <AuthProvider>
+          <Navbar/>
+          {children}
+          
+          </AuthProvider>
+        
       </body>
     </html>
   );

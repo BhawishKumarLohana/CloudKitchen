@@ -1,16 +1,33 @@
 "use client"
 import  { useState } from 'react'
 import { AuthLogin } from '../api/User';
+import { useRouter } from "next/navigation";
+import { useAuth } from '../providers/Auth';
 function login() {
+  const router = useRouter();
+  const { login } = useAuth();
+  const [err, setErr] = useState("");
+
+
     const [formData,setFormData] = useState({
         username:"",
         password:""
     }); 
     const loginRequest = async (e) => {
         e.preventDefault();
-        const result = await AuthLogin(formData);
-        console.log('result:', result);
-        alert(result);
+        setErr("");
+        try{
+          const result = await AuthLogin(formData);
+          console.log('result:', result);
+          const username = result?.username || formData.username;
+          login({username});
+          router.push("/");
+
+        }catch(e){
+          setErr("Login Failed");
+        }
+        
+        
           
 };
 
