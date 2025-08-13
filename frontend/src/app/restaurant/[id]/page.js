@@ -1,89 +1,97 @@
-"use client"
-import { getFoodList } from '@/app/api/Food';
-import { isAppPageRouteDefinition } from 'next/dist/server/route-definitions/app-page-route-definition';
-import { useState } from 'react';
-import React, { useEffect } from 'react'
-import { use } from 'react';
+"use client";
+import { getFoodList } from "@/app/api/Food";
+import { useRouter, useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-function RestaurantById({params}) {
-    const {id} =use(params);
-    //console.log("id"+id);
-    const [Food,setFoodList] = useState([]);
-    const [thisItem,setThisItem] = useState(0); //  by id
+export default function RestaurantById() {
+  const router = useRouter();
+  const { id } = useParams();
 
+  const [food, setFoodList] = useState([]);
+  const [cart, setCart] = useState({}); // { [id]: { id, itemName, price, qty } }
 
-  const getRestaurantById = async (id) => {
+  const getRestaurantById = async (rid) => {
     try {
-      const data = await getFoodList(id);
-      console.log("DATA:", data.foodItemList);
-      setFoodList(data.foodItemList);
+      const data = await getFoodList(rid);
+      setFoodList(data.foodItemList || []);
     } catch (error) {
       console.error("Failed to fetch food list", error);
     }
-};
+  };
 
-// The logic 
-// When an item is Added
-// User must be logged in 
-// Item is from a Restuarant 
-// so each orderId is made up out of userId and Items 
-// items added must belong to one restaurant 
-// don't allow multiple items bought from multiple restaurants
-// OrderTable : {orderId,userId,RestaurantID,itemId}
-// save an Order we pass in userId,RestaurantID,ItemId --> orderId generated. All Checks on the frontend for my ease.
+  const addItem = (clickedItem) => {
+    if (clickedItem.quantity <= 0) return;
 
+    // update visible stock
+    setFoodList((prev) =>
+      prev.map((it) =>
+        it.id === clickedItem.id
+          ? { ...it, quantity: it.quantity - 1 }
+          : it
+      )
+    );
 
- const addItem = (clickedItem) => {
-  const updatedList = Food.map((eachItem) => {
-    if (eachItem.id === clickedItem.id && eachItem.quantity>0) {
-      return {
-        ...eachItem,
-        quantity: eachItem.quantity - 1
+    // update cart summary
+    setCart((prev) => {
+      const existing = prev[clickedItem.id] || {
+        id: clickedItem.id,
+        itemName: clickedItem.itemName,
+        price: clickedItem.price,
+        qty: 0,
       };
-    } else {
-      return eachItem;
-    }
-  });
-
-  setFoodList(updatedList); // Update the state so UI re-renders
-};
-
-
+      return {
+        ...prev,
+        [clickedItem.id]: { ...existing, qty: existing.qty + 1 },
+      };
+    });
+  };
 
   useEffect(() => {
-    if (id) {
-      getRestaurantById(id);
-      
-    }
+    if (id) getRestaurantById(id);
   }, [id]);
 
+  const goToOrder = () => {
+    const items = Object.values(cart); // [{id,itemName,price,qty}]
+    sessionStorage.setItem(
+      "cart",
+      JSON.stringify({ restaurantId: id, items })
+    );
+    router.push("/order");
+  };
 
-   return (
+  return (
     <div>
-    <div>RestaurantById</div>
-    <div className="grid gap-4">
-        {Food.map((item) => (
+      <div>RestaurantById</div>
+
+      <div className="grid gap-4">
+        {food.map((item) => (
           <div key={item.id} className="border p-4 rounded shadow">
             <h2 className="text-lg font-semibold">{item.itemName}</h2>
             <p className="text-sm text-gray-700">{item.itemDescription}</p>
             <p className="text-green-600 font-bold">Price: ${item.price}</p>
-            <p>Quantity: {item.quantity}</p>
-            {item.ingedrients && (
-              <ul className="list-disc list-inside text-sm text-gray-600">
-                {item.ingedrients.map((ing, i) => (
-                  <li key={i}>{ing}</li>
-                ))}
-              </ul>
-            )}
-            <button  onClick={()=>addItem(item)} className='bg-white text-2xl rounded-2xl border-black border-2 hover:bg-emerald-50'>Add</button>
+            <p>In stock: {item.quantity}</p>
+
+            <button
+              onClick={() => addItem(item)}
+              className="bg-white text-2xl rounded-2xl border-black border-2 hover:bg-emerald-50"
+            >
+              Add
+            </button>
           </div>
-          
         ))}
       </div>
-    
-    </div>
-    
-  )
-}
 
-export default RestaurantById
+      <div className="mt-6 flex items-center gap-4">
+        <span className="text-sm text-gray-600">
+          Items in cart: {Object.values(cart).reduce((n, it) => n + it.qty, 0)}
+        </span>
+        <button
+          className="bg-white text-2xl rounded-2xl border-black border-2 hover:bg-emerald-50 px-4 py-1"
+          onClick={goToOrder}
+        >
+          Order
+        </button>
+      </div>
+    </div>
+  );
+}
