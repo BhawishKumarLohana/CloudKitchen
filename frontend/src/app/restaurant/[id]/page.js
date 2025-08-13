@@ -1,5 +1,5 @@
 "use client";
-import { getFoodList } from "@/app/api/Food";
+import { addFoodItem, getFoodList } from "@/app/api/Food";
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -11,22 +11,21 @@ export default function RestaurantById() {
   const [restaurant,setRestaurant] = useState({});
   const [cart, setCart] = useState({}); // { [id]: { id, itemName, price, qty } }
   const [newItemModal,setNewItemModal]  = useState(false);
-  const [formData, setFormData] = useState({
-    itemName: "",
-    itemDescription: "",
-    Ingedrients: [],
-    price: 0,
-    id: null,
-    quantity: 0
+  const [formData,setFormData] = useState({
+    restaurantId:"",
+    itemName:"",
+    itemDescription:"",
+    Ingedrients:"",
+    price:"",
+    quantity:""
   });
-
 
 
 const getRestaurantById = async (rid) => {
   try {
     const data = await getFoodList(rid);
     setRestaurant(data.restaurant ||{});
-    setFormData({...formData,id:restaurant.id});
+    setFormData(prev => ({ ...prev, restaurantId: data.restaurant?.id }));
     setFoodList(data.foodItemList || []);
 
 
@@ -64,7 +63,7 @@ const getRestaurantById = async (rid) => {
 
   useEffect(() => {
     if (id) getRestaurantById(id);
-  }, [id,restaurant]);
+  }, [id]);
 
   const goToOrder = () => {
     const items = Object.values(cart); // [{id,itemName,price,qty}]
@@ -75,13 +74,11 @@ const getRestaurantById = async (rid) => {
     router.push("/order");
   };
   const AddNewItemByRes = async (e) =>{
-     e.preventDefault();
-      console.log("Restaurant ID:", formData.restaurantId);
-    console.log("Item Name:", formData.itemName);
-    console.log("Item Description:", formData.itemDescription);
-    console.log("Ingredients:", formData.Ingedrients);
-    console.log("Price:", formData.price);
-    console.log("Quantity:", formData.quantity);
+    e.preventDefault();
+    const res = await addFoodItem(formData);
+    console.log(res.data);
+
+    
     
   }
 
@@ -94,63 +91,31 @@ const getRestaurantById = async (rid) => {
     // New Item modal content
     <>
     <form onSubmit={AddNewItemByRes}>
-  <div className="grid grid-cols-1 rounded-2xl border-black border-2 p-4 gap-2">
-    
-    <label>Item Name</label>
-    <input
-      placeholder="Item Name"
-      name="itemName"
-      onChange={(e) => setFormData({ ...formData, itemName: e.target.value })}
-    />
-
-    <label>Item Description</label>
-    <input
-      placeholder="Item Description"
-      name="itemDescription"
-      onChange={(e) => setFormData({ ...formData, itemDescription: e.target.value })}
-    />
-
-    <label>Ingredients (comma separated)</label>
-    <input
-      placeholder="Tomatoes, Mozzarella, Basil"
-      name="ingredients"
-      onChange={(e) =>
+    <div className="grid grid-cols-1 rounded-2xl border-black border-2">
+      <label>ItemName</label>
+      <input placeholder="ItemName" onChange={(e)=>{setFormData({...formData,itemName:e.target.value})}}></input>
+      <label>itemDescription</label>
+      <input placeholder="itemDescription"onChange={(e) => {
         setFormData({
           ...formData,
           Ingedrients: e.target.value.split(",").map(i => i.trim())
-        })
-      }
-    />
+        });
+      }}
+></input>
+      <label>Ingredients</label>
+      <input placeholder="Ingredients" onChange={(e)=>{setFormData({...formData,Ingedrients: e.target.value})}}></input>
+      <label>Price</label>
+      <input placeholder="Price" onChange={(e)=>{setFormData({...formData,price: e.target.value})}}></input>
+       <label>quantity</label>
+      <input placeholder="Quantity" onChange={(e)=>{setFormData({...formData,quantity: e.target.value})}}></input>
+      <button className="rounded-2xl border-2 border-black " type="submit">
+        Submit
 
-    <label>Price</label>
-    <input
-      type="number"
-      placeholder="Price"
-      name="price"
-      step="0.01"
-      onChange={(e) =>
-        setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })
-      }
-    />
+      </button>
+      
 
-    <label>Quantity</label>
-    <input
-      type="number"
-      placeholder="Quantity"
-      name="quantity"
-      onChange={(e) =>
-        setFormData({ ...formData, quantity: parseInt(e.target.value) || 0 })
-      }
-    />
-
-    <button
-      className="rounded-2xl border-2 border-black px-4 py-2 mt-2 hover:bg-emerald-50"
-      type="submit"
-    >
-      Submit
-    </button>
-  </div>
-</form>
+    </div>
+    </form>
 
     
     

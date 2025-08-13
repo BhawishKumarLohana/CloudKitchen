@@ -12,11 +12,12 @@ export async function getFoodList(id) {
   return res.data;
 }
 export async function addFoodItem(formData) {
-  const res = await api.post('/addFoodItem',formData,{
+  const res = await api.post('/food/addFoodItem',formData,{
      headers: { "Content-Type": "application/json" },
 
   });
   console.log(res);
+  return res;
 }
 
 
