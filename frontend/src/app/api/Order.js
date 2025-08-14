@@ -8,7 +8,7 @@ const api = axios.create({
 
 export async function addOrder(orderDetails){
 
-    const res = api.post(`/order/addOrder`,orderDetails,{
+    const res = api.post(`/order/addorder`,orderDetails,{
          headers: { "Content-Type": "application/json" },
     });
 

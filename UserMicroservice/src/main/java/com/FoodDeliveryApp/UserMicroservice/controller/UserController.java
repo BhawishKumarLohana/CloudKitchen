@@ -2,12 +2,14 @@ package com.FoodDeliveryApp.UserMicroservice.controller;
 
 import com.FoodDeliveryApp.UserMicroservice.dto.LoginDto;
 import com.FoodDeliveryApp.UserMicroservice.dto.UserDto;
+import com.FoodDeliveryApp.UserMicroservice.entity.User;
 import com.FoodDeliveryApp.UserMicroservice.repository.UserRespository;
 import com.FoodDeliveryApp.UserMicroservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin(origins =  "http://localhost:3000")
@@ -19,7 +21,7 @@ public class UserController {
 
     // Get User info on Id
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:\\d+}")
     public ResponseEntity<Optional<UserDto>> getUserById(@PathVariable int id){
         Optional<UserDto> user =  userService.getUserByid(id);
         return ResponseEntity.ok(user);
@@ -40,5 +42,12 @@ public class UserController {
             return ResponseEntity.ok("FAIL");
         }
     }
+
+    @GetMapping("/details")
+    public ResponseEntity<User> getUserByUsername(@RequestParam String username) {
+        return ResponseEntity.ok(userService.findByUsername(username));
+    }
+
+
 
 }

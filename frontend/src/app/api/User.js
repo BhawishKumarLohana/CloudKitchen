@@ -21,3 +21,14 @@ export async function AuthLogin(payload) {
     throw err;
   }
 }
+export async function getUserByUsername(username) {
+  try {
+    const res = await api.get(`/user/details?username=${encodeURIComponent(username)}`);
+    console.log(res.id);
+    return res;
+  } catch (err) {
+    console.error('User error:', err.response?.data || err.message);
+    throw err;
+  }
+}
+

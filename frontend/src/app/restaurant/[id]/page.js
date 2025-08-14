@@ -12,6 +12,7 @@ export default function RestaurantById() {
   const [cart, setCart] = useState({}); // { [id]: { id, itemName, price, qty } }
   const [newItemModal,setNewItemModal]  = useState(false);
   const [formData,setFormData] = useState({
+    id:"",
     restaurantId:"",
     itemName:"",
     itemDescription:"",
@@ -51,12 +52,14 @@ const getRestaurantById = async (rid) => {
       const existing = prev[clickedItem.id] || {
         id: clickedItem.id,
         itemName: clickedItem.itemName,
+        itemDescription: clickedItem.itemDescription,
         price: clickedItem.price,
-        qty: 0,
+        quantity: 0,
+        restaurantId: id,
       };
       return {
         ...prev,
-        [clickedItem.id]: { ...existing, qty: existing.qty + 1 },
+        [clickedItem.id]: { ...existing, quantity: existing.quantity + 1 },
       };
     });
   };
@@ -66,7 +69,7 @@ const getRestaurantById = async (rid) => {
   }, [id]);
 
   const goToOrder = () => {
-    const items = Object.values(cart); // [{id,itemName,price,qty}]
+    const items = Object.values(cart); 
     sessionStorage.setItem(
       "cart",
       JSON.stringify({ restaurantId: id, items })
