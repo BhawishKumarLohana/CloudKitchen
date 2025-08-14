@@ -1,19 +1,26 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import { useAuth } from "../providers/Auth";
 
 export default function OrderPage() {
   const [cart, setCart] = useState({ restaurantId: null, items: [] });
+  const {user} = useAuth();
+
 
   useEffect(() => {
     const raw = sessionStorage.getItem("cart");
     if (raw) setCart(JSON.parse(raw));
   }, []);
 
+  
+
   const { totalItems, subtotal } = useMemo(() => {
     const items = cart.items || [];
+    console.log(items);
     const totalItems = items.reduce((n, it) => n + it.qty, 0);
     const subtotal = items.reduce((sum, it) => sum + it.qty * it.price, 0);
-    console.log(cart.restaurantId);
+    console.log("Restaurant ID "+cart.restaurantId);
+    console.log("User ID "+user?.username);
 
     return { totalItems, subtotal };
   }, [cart]);
