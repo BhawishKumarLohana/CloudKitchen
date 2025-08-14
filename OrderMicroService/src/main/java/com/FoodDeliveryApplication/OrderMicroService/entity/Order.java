@@ -18,11 +18,20 @@ import java.util.List;
 @Document(collection = "order")
 public class Order {
 
-    public void setId(int id) {
+    @Id
+    private String id;  // Let Mongo auto-generate ObjectId as a String
+
+    private Integer userId;
+    private Restaurant restaurant;
+    private List<FoodItemDto> items;
+    private Double total;
+
+    // Setters
+    public void setId(String id) {
         this.id = id;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -38,11 +47,12 @@ public class Order {
         this.total = total;
     }
 
-    public int getId() {
+    // Getters
+    public String getId() {
         return id;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
@@ -57,13 +67,4 @@ public class Order {
     public List<FoodItemDto> getItems() {
         return items;
     }
-
-    @Id
-    private int id;
-
-    private int userId;
-    private Restaurant restaurant;
-    private List<FoodItemDto> items;
-
-    private Double total;
 }

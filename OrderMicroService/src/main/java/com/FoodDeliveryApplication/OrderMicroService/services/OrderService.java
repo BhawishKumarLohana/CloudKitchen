@@ -13,18 +13,13 @@ public class OrderService {
 
     @Autowired
     private  OrderRepository orderRepository;
-    @Autowired
-    private SequenceGeneratorService seq;
+
 
     public Order create(Order incoming) {
-        Order order = new Order();
-        order.setId(seq.next(ORDER_SEQ));      // << generate incremental int
-        order.setUserId(incoming.getUserId());
-        order.setRestaurant(incoming.getRestaurant());
-        order.setItems(incoming.getItems());
-        order.setTotal(incoming.getTotal());
-        return orderRepository.save(order);
+        // Do NOT set the ID — Mongo will assign an ObjectId automatically
+        return orderRepository.save(incoming);
     }
+
 
 
 }
