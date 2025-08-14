@@ -1,6 +1,7 @@
 package com.FoodDeliveryApplication.OrderMicroService.services;
 
 import com.FoodDeliveryApplication.OrderMicroService.Repository.OrderRepository;
+import com.FoodDeliveryApplication.OrderMicroService.dto.OrderDto;
 import com.FoodDeliveryApplication.OrderMicroService.entity.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,12 @@ public class OrderService {
     private  OrderRepository orderRepository;
 
 
-    public Order create(Order incoming) {
-        // Do NOT set the ID — Mongo will assign an ObjectId automatically
-        return orderRepository.save(incoming);
+    public Order create(OrderDto incoming) {
+        Order order = new Order();
+        order.setUserId(incoming.getUserId());
+        order.setItems(incoming.getItems());
+        order.setTotal(incoming.getTotal());
+        return orderRepository.save(order);
     }
 
 

@@ -2,10 +2,8 @@ package com.FoodDeliveryApplication.OrderMicroService.entity;
 
 
 import com.FoodDeliveryApplication.OrderMicroService.dto.FoodItemDto;
-import com.FoodDeliveryApplication.OrderMicroService.dto.Restaurant;
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -22,7 +20,6 @@ public class Order {
     private String id;  // Let Mongo auto-generate ObjectId as a String
 
     private Integer userId;
-    private Restaurant restaurant;
     private List<FoodItemDto> items;
     private Double total;
 
@@ -35,9 +32,7 @@ public class Order {
         this.userId = userId;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
+
 
     public void setItems(List<FoodItemDto> items) {
         this.items = items;
@@ -56,9 +51,7 @@ public class Order {
         return userId;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
+
 
     public Double getTotal() {
         return total;
