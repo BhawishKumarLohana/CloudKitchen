@@ -1,5 +1,6 @@
 package com.FoodDeliveryApp.foodCatalogue.controller;
 
+import com.FoodDeliveryApp.foodCatalogue.dto.DecreaseRequestDto;
 import com.FoodDeliveryApp.foodCatalogue.dto.FoodItemDto;
 import com.FoodDeliveryApp.foodCatalogue.dto.foodCatalogue;
 import com.FoodDeliveryApp.foodCatalogue.service.FoodCatalogueService;
@@ -24,6 +25,13 @@ public class FoodCatalogueController {
     @GetMapping("/detail/{id}")
     public ResponseEntity<foodCatalogue> details (@PathVariable Integer id) {
         return ResponseEntity.ok(foodCatalogueService.details(id));
+    }
+
+    @PostMapping("/decrease")
+    public ResponseEntity<?> decrease(@RequestBody DecreaseRequestDto req){
+        foodCatalogueService.decrease(req.getItemid(),req.getQuantity());
+        return ResponseEntity.ok("Success");
+
     }
 
 

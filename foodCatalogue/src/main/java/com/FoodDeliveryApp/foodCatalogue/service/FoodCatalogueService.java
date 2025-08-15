@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FoodCatalogueService {
@@ -60,5 +61,16 @@ public class FoodCatalogueService {
     public List<foodItem> getFoodList(Integer id){
         return foodCatalogueRepo.findByRestaurantId(id);
 
+    }
+
+    public void decrease(Integer itemid, Integer quantity) {
+        foodCatalogueRepo.findById(itemid).ifPresent(item -> {
+            int newQuantity = item.getQuantity() - quantity;
+            if (newQuantity < 0) {
+                newQuantity = 0; // prevent negative stock
+            }
+            item.setQuantity(newQuantity);
+            foodCatalogueRepo.save(item);
+        });
     }
 }

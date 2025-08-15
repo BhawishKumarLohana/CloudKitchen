@@ -23,6 +23,10 @@ public class FoodItemDto {
     }
     public FoodItemDto(){}
 
+    public Integer getId(){return this.id;}
+
+
+
     public String getItemName() {
         return itemName;
     }
