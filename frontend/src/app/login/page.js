@@ -3,7 +3,7 @@ import  { useState } from 'react'
 import { AuthLogin } from '../api/User';
 import { useRouter } from "next/navigation";
 import { useAuth } from '../providers/Auth';
-function login() {
+function Login() {
   const router = useRouter();
   const { login } = useAuth();
   const [err, setErr] = useState("");
@@ -51,4 +51,4 @@ function login() {
   )
 }
 
-export default login
+export default Login

@@ -1,7 +1,7 @@
 "use client"
 import  { useState } from 'react'
 import { createUser } from '../api/User';
-function signup() {
+function Signup() {
 
     const [formData,setFormData] = useState({
         username: "",
@@ -57,4 +57,4 @@ function signup() {
   )
 }
 
-export default signup
+export default Signup

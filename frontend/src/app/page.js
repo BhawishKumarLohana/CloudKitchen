@@ -55,7 +55,7 @@ async function sendCreateRestaurant(formData){
 
     }
     fetchRestarants();
-  },[])
+  },[Restaurants])
 
   if(createRestModal){
     modalContent = (

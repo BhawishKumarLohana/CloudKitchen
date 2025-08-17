@@ -12,7 +12,7 @@ export default function OrderPage() {
   useEffect(() => {
     const raw = sessionStorage.getItem("cart");
     if (raw) setCart(JSON.parse(raw));
-  }, []);
+  }, [user.username]);
 
   
 
