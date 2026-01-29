@@ -53,6 +53,9 @@ Here are some pictures form the application:
 
 ![Login](./pictures/SignIn.png)  
 
+![Arhitecture](./pictures/daigram.png)  
+
+
 ## What I Learned
 
 Through building this project, I gained hands‑on experience with:
