@@ -43,6 +43,16 @@ This approach increases:
 
 Each microservice is containerized using **Docker**:
 
+Here are some pictures form the application:
+
+![Homepage](./pictures/HOME.png)  
+
+![Create Restaurant](./pictures/Restaurant.png)  
+
+![Signup](./pictures/SignUp.png)  
+
+![Login](./pictures/SignIn.png)  
+
 ## What I Learned
 
 Through building this project, I gained hands‑on experience with:
