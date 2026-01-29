@@ -11,7 +11,7 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         {/* Brand */}
         <Link href="/" className="text-xl font-semibold">
-          Feelivero
+          FOOD DELIVERY APP
         </Link>
 
         {/* Nav (desktop) */}

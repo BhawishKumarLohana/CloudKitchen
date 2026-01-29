@@ -10,7 +10,7 @@ spring:
   application:
     name: FoodCatalogueMS
   datasource:
-    url: jdbc:mysql://localhost:3306/foodDB //mysql-db-instance.c5y0kemg0l9l.eu-west-2.rds.amazonaws.com:3306/fooddb
+    url: jdbc:mysql://localhost:3306/foodDB
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
